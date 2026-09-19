@@ -1,0 +1,19 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "busago-web",
+  "main": "./custom-worker.ts",
+  "compatibility_date": "2025-06-20",
+  "compatibility_flags": ["nodejs_compat"],
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS"
+  },
+  "observability": {
+    "enabled": true
+  },
+  "triggers": {
+    // Todos los días a las 12:00 UTC (9am Argentina) — envía el digest de
+    // leads de las últimas 24hs si hubo alguno nuevo.
+    "crons": ["0 12 * * *"]
+  }
+}

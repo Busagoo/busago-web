@@ -1,0 +1,179 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: dark;
+    --ring: 109 125 255;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    /* La navbar es fixed: sin este padding los anclas quedan tapadas. */
+    scroll-padding-top: 6.5rem;
+    background-color: #070a1e;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-transparent text-ink antialiased min-h-screen;
+    overflow-x: hidden;
+    -webkit-tap-highlight-color: transparent;
+    text-rendering: optimizeLegibility;
+  }
+
+  /*
+   * El fondo (degradado azul marino + resplandor neón + grilla visible) vive en una capa fixed propia.
+   */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-color: #070a1e;
+    background-image: 
+      radial-gradient(circle at 15% 15%, rgba(67, 86, 253, 0.28), transparent 45%),
+      radial-gradient(circle at 85% 25%, rgba(94, 230, 216, 0.22), transparent 40%),
+      radial-gradient(circle at 50% 75%, rgba(67, 86, 253, 0.18), transparent 50%),
+      linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+    background-size: auto, auto, auto, 42px 42px, 42px 42px;
+    will-change: transform;
+  }
+
+  ::selection {
+    @apply bg-brand-500/60 text-white;
+  }
+
+  ::placeholder {
+    @apply text-ink-subtle;
+    opacity: 1;
+  }
+
+  /* Foco visible y consistente en todo el sitio: antes no existía en ningún
+     control, así que navegar con teclado era imposible. */
+  :focus-visible {
+    outline: 2px solid rgb(var(--ring));
+    outline-offset: 2px;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-base-900;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply rounded-full bg-brand-700;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-brand-600;
+  }
+
+  /*
+   * Acotado a propósito, no el bloque `*` de siempre.
+   *
+   * En Android el ahorro de batería activa esta preferencia solo, sin que el
+   * usuario lo pida explícitamente. Matar toda animación y toda transición
+   * dejaba el sitio como muerto: marquee congelado, hover sin respuesta,
+   * acordeón que salta. Así que acá se frena únicamente el movimiento
+   * decorativo y repetitivo, que es lo que el media query busca evitar.
+   *
+   * Siguen corriendo: el video (es contenido), el marquee de logos, y las
+   * transiciones cortas de hover/foco/acordeón. Las animaciones de entrada
+   * las neutraliza framer-motion vía <MotionConfig reducedMotion="user">.
+   */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    .animate-halo,
+    .animate-ping,
+    .animate-float {
+      animation: none !important;
+    }
+  }
+}
+
+@layer components {
+  .eyebrow {
+    @apply inline-flex items-center gap-2 rounded-full border border-accent-cyan/40 bg-accent-cyan/15 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-accent-cyan shadow-[0_0_15px_rgba(94,230,216,0.25)] backdrop-blur-xl;
+  }
+
+  /* min-h-11 = 44px, el mínimo táctil recomendado. */
+  .btn-pill {
+    @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-brand-500 px-7 py-3.5 text-sm font-semibold text-white shadow-brand transition-all duration-300 hover:bg-brand-400 hover:shadow-[0_16px_40px_-14px_theme(colors.brand.500)] active:scale-[0.98];
+  }
+
+  .btn-pill-outline {
+    @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-white/15 bg-white/[0.03] px-7 py-3.5 text-sm font-semibold text-white transition-all duration-300 hover:border-white/30 hover:bg-white/[0.08] active:scale-[0.98];
+  }
+
+  .field {
+    @apply w-full rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-ink outline-none transition-colors duration-200 focus:border-brand-400 focus:bg-white/[0.06];
+  }
+
+  .field-label {
+    @apply mb-1.5 block text-xs font-medium text-ink-subtle;
+  }
+
+  .card-glow {
+    position: relative;
+    @apply rounded-2xl border border-white/10 bg-white/[0.03] shadow-card backdrop-blur-sm transition-all duration-500;
+  }
+
+  .card-glow::before {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(
+      120deg,
+      rgba(67, 86, 253, 0) 0%,
+      rgba(67, 86, 253, 0.6) 50%,
+      rgba(94, 230, 216, 0) 100%
+    );
+    background-size: 200% 200%;
+    background-position: 0% 50%;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+  }
+
+  .card-glow:hover::before,
+  .card-glow:focus-within::before {
+    opacity: 1;
+    animation: gradient-x 3s ease infinite;
+  }
+
+  /* Ritmo vertical único para todas las secciones de la home. */
+  .section-y {
+    @apply py-20 md:py-28;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .text-pretty {
+    text-wrap: pretty;
+  }
+
+  /* Carruseles horizontales: el scroll sigue existiendo, la barra nativa no. */
+  .no-scrollbar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+}

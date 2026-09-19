@@ -1,0 +1,122 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+/// Área macro de negocio. Ordena el menú "/servicios" y decide en qué bloque
+/// de la landing aparece cada servicio destacado.
+enum ServiceArea {
+  ATENCION_CLIENTE
+  ADMINISTRACION_OPERATIVA
+  COMERCIAL_VENTAS
+  A_MEDIDA
+
+  @@map("service_area")
+}
+
+model Service {
+  id                String      @id @default(cuid())
+  slug              String      @unique
+  area              ServiceArea
+  categoria         String      @map("categoria")
+  tituloServicio    String      @map("titulo_servicio")
+  descripcionCorta  String      @map("descripcion_corta")
+  descripcionLarga  String      @map("descripcion_larga") @db.Text
+  iconoSvg          String      @map("icono_svg") @db.Text
+  imagenUrl         String?     @map("imagen_url")
+  destacado         Boolean     @default(false)
+  orden             Int         @default(0)
+  seoKeywords       String[]    @map("seo_keywords")
+  createdAt         DateTime    @default(now()) @map("created_at")
+  updatedAt         DateTime    @updatedAt @map("updated_at")
+
+  @@index([area])
+  @@index([destacado])
+  @@map("services")
+}
+
+/// Leads generados desde la tarjeta "Plan Personalizado" de la landing.
+model LeadPersonalizado {
+  id           String   @id @default(cuid())
+  nombre       String
+  empresa      String
+  email        String
+  telefono     String?
+  volumenAprox String?  @map("volumen_aprox")
+  descripcion  String   @db.Text
+  origen       String   @default("landing")
+  ip           String?  @map("ip")
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  @@map("leads_personalizados")
+}
+
+/// Leads recolectados por el agente de voz de LiveKit (Agent Builder).
+model LeadVoz {
+  id         String    @id @default(cuid())
+  jobId      String?   @map("job_id")
+  roomId     String?   @map("room_id")
+  room       String?
+  startedAt  DateTime? @map("started_at")
+  endedAt    DateTime? @map("ended_at")
+  summary    String?   @db.Text
+  resultados Json
+  createdAt  DateTime  @default(now()) @map("created_at")
+
+  @@map("leads_voz")
+}
+
+/// Plantillas de email reutilizables para las campañas manuales del dashboard
+model EmailTemplate {
+  id         String   @id @default(cuid())
+  nombre     String
+  asunto     String
+  cuerpoHtml String   @map("cuerpo_html") @db.Text
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+
+  @@map("email_templates")
+}
+
+/// Mensajes del chat de la sección FAQ/Agent
+model FaqChatMessage {
+  id        String   @id @default(cuid())
+  sessionId String   @map("session_id")
+  role      String
+  text      String   @db.Text
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@index([sessionId])
+  @@map("faq_chat_messages")
+}
+
+/// Resumen generado por sesión después de periodo de inactividad
+model FaqSessionSummary {
+  id        String   @id @default(cuid())
+  sessionId String   @map("session_id") @unique
+  summary   String   @db.Text
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("faq_session_summaries")
+}
+
+/// Base de datos de conocimiento y datos clave de Busago para que las IAs consulten en vivo desde Supabase
+model CompanyKnowledge {
+  id         String   @id @default(cuid())
+  categoria  String   @map("categoria")
+  clave      String   @unique @map("clave")
+  pregunta   String   @map("pregunta")
+  respuesta  String   @db.Text @map("respuesta")
+  tags       String[] @default([])
+  orden      Int      @default(0)
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+
+  @@index([categoria])
+  @@map("company_knowledge")
+}

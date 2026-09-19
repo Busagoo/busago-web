@@ -1,0 +1,19 @@
+# Copia este archivo a .dev.vars para desarrollo local con `next dev`
+# (leído automáticamente por initOpenNextCloudflareForDev en next.config.mjs).
+# En producción, cargá las mismas claves como secrets del Worker:
+#   npx wrangler secret put SUPABASE_URL
+#   npx wrangler secret put SUPABASE_SERVICE_ROLE_KEY
+
+SUPABASE_URL="https://xxxxxxxx.supabase.co"
+SUPABASE_SERVICE_ROLE_KEY="eyJ..."
+NEXT_PUBLIC_SITE_URL="https://busago.ai"
+NEXT_PUBLIC_WHATSAPP_NUMBER="5491100000000"
+LEADS_WEBHOOK_URL=""
+RESEND_API_KEY=""
+LEADS_NOTIFICATION_EMAIL=""
+NEXT_PUBLIC_LIVEKIT_AGENT_ID=""
+LIVEKIT_WEBHOOK_SECRET=""
+LIVEKIT_API_KEY=""
+LIVEKIT_API_SECRET=""
+LIVEKIT_URL=""
+GROQ_API_KEY=""
