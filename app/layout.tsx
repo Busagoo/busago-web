@@ -38,7 +38,7 @@ const greaterTheory = localFont({
   fallback: ["var(--font-sans)", "system-ui", "sans-serif"],
 });
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://inicio.busago.studio";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.busago.studio";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
