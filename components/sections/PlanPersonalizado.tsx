@@ -451,7 +451,7 @@ export default function PlanPersonalizado() {
 
                         {status === "error" && (
                           <p className="text-center text-xs text-red-400">
-                            Algo salió mal. Por favor intentá de nuevo o escribinos a hola@busago.ai
+                            Algo salió mal. Por favor intentá de nuevo o escribinos a hola@busago.studio
                           </p>
                         )}
                         {status === "rate_limited" && (

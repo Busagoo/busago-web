@@ -4,7 +4,7 @@ import { Scale } from "lucide-react";
 export const metadata: Metadata = {
   title: "Términos y Condiciones",
   description:
-    "Condiciones de uso del sitio busago.ai, de las demos de IA y de los servicios de automatización de Busago.",
+    "Condiciones de uso del sitio busago.studio, de las demos de IA y de los servicios de automatización de Busago.",
 };
 
 const ACTUALIZADO = "13 de agosto de 2026";
@@ -44,7 +44,7 @@ export default function TerminosYCondicionesPage() {
         <div className="mx-auto mt-16 max-w-2xl">
           <Section title="Aceptación">
             <p>
-              Al navegar busago.ai, completar el formulario de diagnóstico o usar el chat y el
+              Al navegar busago.studio, completar el formulario de diagnóstico o usar el chat y el
               agente de voz de demo, aceptás estas condiciones. Si no estás de acuerdo, te pedimos
               que no uses el sitio.
             </p>
@@ -126,8 +126,8 @@ export default function TerminosYCondicionesPage() {
           <Section title="Contacto">
             <p>
               Para consultas sobre estos términos, escribinos a{" "}
-              <a href="mailto:hola@busago.ai" className="text-white underline underline-offset-2">
-                hola@busago.ai
+              <a href="mailto:hola@busago.studio" className="text-white underline underline-offset-2">
+                hola@busago.studio
               </a>
               .
             </p>

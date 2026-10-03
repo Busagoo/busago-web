@@ -85,10 +85,10 @@ no corre código de este repo). Dos puntos de integración:
   inyecta el `<script>` de embed de LiveKit (`data-lk-agent`) usando la env var
   `NEXT_PUBLIC_LIVEKIT_AGENT_ID`. El id se consigue en LiveKit Cloud → Agents → el agente →
   "Embed drawer" (empieza con `CA_`). Restringí el dominio en el dashboard ("allowed domains")
-  para que el widget solo cargue en `busago.ai`.
+  para que el widget solo cargue en `busago.studio`.
 - **Guardado de leads:** en el builder, sección **Conversation → Call ending**, configurá la
   "Summary and data collection endpoint URL" apuntando a
-  `https://busago.ai/api/leads/voice`, y agregá un header custom
+  `https://busago.studio/api/leads/voice`, y agregá un header custom
   `x-livekit-webhook-secret: <mismo valor que LIVEKIT_WEBHOOK_SECRET>`. El endpoint
   ([`route.ts`](app/api/leads/voice/route.ts)) valida ese header, y guarda el payload
   (`results` + resumen + metadata de la sesión) en la tabla `leads_voz`. Como los campos

@@ -78,7 +78,7 @@ export async function sendLeadConfirmationEmail(lead: Lead) {
     <h2>¡Recibimos tu solicitud, ${escapeHtml(lead.nombre)}!</h2>
     <p>Gracias por contarnos sobre el proceso que querés automatizar en ${escapeHtml(lead.empresa)}.</p>
     <p>Nuestro equipo va a revisar tu caso y te va a escribir en menos de 48hs para entregarte una propuesta técnica a medida.</p>
-    <p>Si mientras tanto tenés alguna duda, escribinos directamente a hola@busago.ai.</p>
+    <p>Si mientras tanto tenés alguna duda, escribinos directamente a hola@busago.studio.</p>
   `;
 
   await sendEmail(env as unknown as ResendEnv, {
@@ -238,7 +238,7 @@ export async function sendServicePdfProposalEmail(data: {
 
         <p>Un especialista del equipo de Busago revisará tus requerimientos específicos y se pondrá en contacto contigo en menos de 48 horas.</p>
 
-        <a href="https://busago.ai/#plan-a-medida" class="cta-btn">Coordinar reunión de diagnóstico</a>
+        <a href="https://busago.studio/#plan-a-medida" class="cta-btn">Coordinar reunión de diagnóstico</a>
 
         <div class="footer">
           Busago AI — Soluciones de Inteligencia Artificial para Empresas.<br>

@@ -44,7 +44,7 @@ export default function PoliticaDePrivacidadPage() {
         <div className="mx-auto mt-16 max-w-2xl">
           <Section title="Quiénes somos">
             <p>
-              Esta política aplica al sitio busago.ai, operado por Busago ("nosotros"), agencia de
+              Esta política aplica al sitio busago.studio, operado por Busago ("nosotros"), agencia de
               automatización de procesos con Inteligencia Artificial con base en Buenos Aires,
               Argentina. Para cualquier consulta sobre tus datos personales, escribinos a{" "}
               <a href="mailto:bustosthiagoagustin@gmail.com" className="text-white underline underline-offset-2">
